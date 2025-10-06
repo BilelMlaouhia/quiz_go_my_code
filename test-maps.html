@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Carte OSM avec Leaflet</title>
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+  <style>
+    html, body { height: 100%; margin: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+    #myMap { height: 50%; width: 50%; } /* fixed height so Leaflet can render */
+    .custom-div-icon i { font-size: 24px; color: blue; }
+    button { margin-top: 10px; padding: 8px 16px; font-size: 16px; cursor: pointer; }   
+  </style>
+</head>
+<body>
+  <div id="myMap"></div>
+  <button id="openMarker">Show Marker Popup</button>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <script>
+    // Create the map
+    const map = L.map('myMap').setView([36.8065, 10.1815], 10);
+
+    // OpenStreetMap tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(map);
+
+    // Custom Font Awesome icon
+    const myIcon = L.divIcon({
+      html: '<i class="fa-solid fa-house"></i>',
+      className: 'custom-div-icon',
+      iconSize: [40, 40],
+      iconAnchor: [20, 40],
+      popupAnchor: [0, -35]
+    });
+
+    // Marker with popup
+    const customMarker = L.marker([36.807, 10.182], { icon: myIcon }).addTo(map)
+      .bindPopup('hedhi dari');
+
+    // Marker click event
+    customMarker.on('click', () => {
+      alert('Marker clicked!');
+    });
+
+    // Button to open popup
+    document.getElementById('openMarker').addEventListener('click', () => {
+      customMarker.openPopup();
+    });
+
+    // Scale control
+    L.control.scale().addTo(map);
+  </script>
+</body>
+</html>
