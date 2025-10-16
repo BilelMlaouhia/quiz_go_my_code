@@ -1,0 +1,73 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+       
+</body>
+<script>
+    let msg =[];
+    for(let i=0 ; i<3;i++){
+        let span = document.createElement("span");
+        span.id=`s${i+1}`;
+        let small = document.createElement("small");
+        small.innerText = "Question " + (i+1);
+        span.appendChild(small);
+         span.appendChild(document.createElement("br"));
+        document.body.appendChild(span) ;
+
+        document.body.appendChild(document.createElement("br"));
+       for(let j=0; j<3;j++){
+        let label = document.createElement("label");
+        label.textContent=`reponse ${j+1}`;
+        let input = document.createElement("input");
+        input.type = "radio";
+        input.id =`i${j+1}${i+1}`;
+        label.htmlFor = `i${j+1}${i+1}`;
+        if (j===0) input.style.marginTop = "20px";
+        if (j===2) input.style.marginBottom = "10px";
+        input.appendChild(document.createElement("br"));
+        
+        span.appendChild(input);
+        span.appendChild(label);
+        span.appendChild(document.createElement("br"));
+        
+       }
+     
+    }
+     let btn= document.createElement('button');
+       btn.textContent= 'check answer';
+        btn.addEventListener('click',function() { 
+        let mySpans = document.querySelectorAll('span');
+        console.log(mySpans);
+         mySpans.forEach((sp,index)=>{
+            let small = sp.querySelector('small');
+            let myinputs = sp.querySelectorAll('input');
+            let myChecked = Array.from(myinputs).filter(inp=>{ return inp.checked});
+            let myLabels = sp.querySelectorAll('label');
+            let showingLabels = [];
+            msg[index]="";
+            myLabels.forEach(lb=>{
+               myChecked.forEach(myc=>{
+                if(myc.checked && myc.id == lb.htmlFor) showingLabels.push(lb); 
+               })
+            })
+            console.log(showingLabels);
+             
+            showingLabels.forEach((sl,index)=>{
+               if(showingLabels[index]!==undefined){
+                msg[index]===""?msg[index] = showingLabels[index].textContent:msg[index]= msg[index]+" and "+showingLabels[index].textContent;
+               } 
+            });
+         if(showingLabels[index]!==undefined)  alert(small.textContent +" the user responsed by: "+msg[index]);
+
+         });
+        }
+    );
+       document.body.appendChild(btn);
+       
+       
+</script>
+</html>
